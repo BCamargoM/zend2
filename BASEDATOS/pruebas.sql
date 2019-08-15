@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `pruebas`
 --
+CREATE DATABASE `pruebas` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `pruebas`;
 
 -- --------------------------------------------------------
 
