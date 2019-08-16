@@ -9,16 +9,14 @@
 
 namespace Application;
 
+use Application\Model\Usuario;
+use Application\Model\UsuariosTable;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
-use Zend\Db\ResultSet\ResultSet;
-use Zend\Db\TableGateway\TableGateway;
-use Application\Model\Usuario;
-use Application\Model\UsuariosTable;
-
-class Module
-{
+class Module {
     public function onBootstrap(MvcEvent $e)
     {
         $eventManager        = $e->getApplication()->getEventManager();
@@ -43,17 +41,16 @@ class Module
     }
     
     
-    public function getServiceConfig()
-    {
+    public function getServiceConfig(){
         return array(
-            "factories" => array(
-                "Application\Model\UsuariosTable" => function ($sm){
-                    $tableGateway  = $sm->get("UsuariosTableGateway");
+            'factories' => array(
+                'Application\Model\UsuariosTable' => function ($sm){
+                    $tableGateway  = $sm->get('UsuariosTableGateway');
                     $table  = new UsuariosTable($tableGateway);
                     return $table;
                 } ,
-            "UsuariosTableGateway" => function ($sm){
-                    $dbAdapter = $sm->get("Zend\Db\Adapter\Adapter");                    
+            'UsuariosTableGateway' => function ($sm){
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');                    
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new Usuario());
                     return new TableGateway("usuarios",$dbAdapter,null,$resultSetPrototype);

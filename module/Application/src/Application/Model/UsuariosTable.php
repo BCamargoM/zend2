@@ -3,6 +3,7 @@
 namespace Application\Model;
 
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\Adapter\Adapter;
 
 class UsuariosTable{
     
@@ -10,7 +11,7 @@ class UsuariosTable{
     
     public function __construct(TableGateway $tableGateway) {
         $this->tableGateway = $tableGateway;
-    }
+    }     
     
     public function fetchAll(){
         $resultSet = $this->tableGateway->select();
@@ -27,12 +28,19 @@ class UsuariosTable{
         return $row;
     }
     
+     public function getUsuarioByEmail($email){        
+        $rowset = $this->tableGateway->select(array("email" => $email));
+        $row = $rowset->current();
+        
+        return $row;
+    }
+    
     public function saveUsuario (Usuario $usuario){
         
         $data = array(
             "name" => $usuario->name,
             "surname" => $usuario->surname,
-            "descripcion" => $usuario->descripcion,
+            "description" => $usuario->description,
             "email" => $usuario->email,
             "password" => $usuario->password,
             "image" => $usuario->image,
@@ -49,13 +57,11 @@ class UsuariosTable{
             }else{
                 throw new \Exception("El usuario  no existe");
             }
-        }
-        
+        }        
         return $return;
     }
     
-    public function deleteUsuario($id){
-        
+    public function deleteUsuario($id){        
         $delete = $this->tableGateway->delete(array("id" => (int)$id));
         return $delete;
     }

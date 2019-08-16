@@ -1,6 +1,4 @@
-
 <?php
-
 namespace Application\Model;
 
 class Usuario{

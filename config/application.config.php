@@ -3,7 +3,7 @@ return array(
     // This should be an array of module namespaces used in the application.
     'modules' => array(
         'Application',
-        'MPruebas',
+        'MPruebas'
         
     ),
 
@@ -22,11 +22,8 @@ return array(
         // modules are loaded. These effectively override configuration
         // provided by modules themselves. Paths may use GLOB_BRACE notation.
         'config_glob_paths' => array(
-         //  'config/autoload/{,*.}{global,local}.php',            
-            '/www/local/zf2/config/autoload/{,*.}{global,local}.php',
+            'config/autoload/{,*.}{global,local}.php',            
         ),
-     
-//'config_glob_paths' => array( '/www/local/zf2/config/autoload/{,*.}{global,local}.php', ),
         // Whether or not to enable a configuration cache.
         // If enabled, the merged configuration will be cached and used in
         // subsequent requests.

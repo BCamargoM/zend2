@@ -18,6 +18,18 @@ use Zend\I18n\Validator as I18Validator;
 class IndexController extends AbstractActionController
 {
     
+    //public $dbAdapter;
+    public function indexAction()
+    {
+        return new ViewModel();
+    }
+
+    /*public function resultAction(){
+        $this->dbAdapter = $this->getServiceLocator()->get("Zend\Db\Adapter\Adapter");
+        var_dump($this->dbAdapter);
+        return new viewModel(array('titulo'=>"Conectarme a MYSQL"));
+    }*/
+    
     protected  $usuariosTable;
     
     protected  function  getUsuariosTable(){
@@ -25,14 +37,12 @@ class IndexController extends AbstractActionController
         if(!$this->usuariosTable){
             $sm = $this->getServiceLocator();
             $this->usuariosTable = $sm->get("Application\Model\UsuariosTable");
+            
         }
         return $this->usuariosTable;
     } 
     
-    public function indexAction()
-    {
-        return new ViewModel();
-    }
+  
     public function helloWorldAction(){
         echo    "Hello world! Welcome  to the course from Zend Framework 2";
         die();
@@ -90,12 +100,41 @@ class IndexController extends AbstractActionController
         }
     }
     
-    public function listarAction(){
+    public function listarAction(){       
+        
         $usuarios = $this->getUsuariosTable()->fetchAll();
+        
         foreach($usuarios as $usuario){
-            var_dump($usuario);
+        var_dump($usuario);    
         }
         
         die();
+    }
+    
+    public function addAction(){
+        $usuario = new \Application\Model\Usuario();
+        
+        $data = array(
+            "name" =>"Steven",
+            "surname" =>"Wayne",
+            "description" =>"Desarrollador de sitios web á é ",
+            "email" =>"steven@gm.com",
+            "password" =>"desarrollo",
+            "image" =>"null",
+            "alternative" =>"null"
+        );
+        $usuario->exchangeArray($data);
+        
+        $usuario_by_email =  $this->getUsuariosTable()->getUsuarioByEmail($data["email"]);
+        
+        if($usuario_by_email ){
+            $this->redirect()->toUrl($this->getRequest()->getBaseUrl()."/application/index/listar");    
+        }else{
+            $save = $this->getUsuariosTable()->saveUsuario($usuario);
+            $this->redirect()->toUrl($this->getRequest()->getBaseUrl()."/application/index/listar");  
+        }
+        
+        
+        
     }
 }
