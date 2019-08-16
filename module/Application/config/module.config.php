@@ -103,9 +103,10 @@ return array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
             'Application\Controller\Pruebas' => 'Application\Controller\PruebasController'
         ),
+        /*
          'factories' => array(
         'Controller\AlbumController' => 'Factory\Controller\AlbumControllerFactory',
-         ),
+         ),*/
     ),
     'view_manager' => array(
         'display_not_found_reason' => true,

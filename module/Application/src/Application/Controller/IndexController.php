@@ -18,18 +18,11 @@ use Zend\I18n\Validator as I18Validator;
 class IndexController extends AbstractActionController
 {
     
-    //public $dbAdapter;
+
     public function indexAction()
     {
         return new ViewModel();
     }
-
-    /*public function resultAction(){
-        $this->dbAdapter = $this->getServiceLocator()->get("Zend\Db\Adapter\Adapter");
-        var_dump($this->dbAdapter);
-        return new viewModel(array('titulo'=>"Conectarme a MYSQL"));
-    }*/
-    
     protected  $usuariosTable;
     
     protected  function  getUsuariosTable(){
@@ -40,8 +33,7 @@ class IndexController extends AbstractActionController
             
         }
         return $this->usuariosTable;
-    } 
-    
+    }     
   
     public function helloWorldAction(){
         echo    "Hello world! Welcome  to the course from Zend Framework 2";
@@ -115,10 +107,10 @@ class IndexController extends AbstractActionController
         $usuario = new \Application\Model\Usuario();
         
         $data = array(
-            "name" =>"Steven",
+            "name" =>"Alexa",
             "surname" =>"Wayne",
             "description" =>"Desarrollador de sitios web á é ",
-            "email" =>"steven@gm.com",
+            "email" =>"alexa@gm.com",
             "password" =>"desarrollo",
             "image" =>"null",
             "alternative" =>"null"
