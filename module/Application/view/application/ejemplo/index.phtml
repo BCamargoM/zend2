@@ -1,0 +1,27 @@
+  
+<h1>Listado de Usuarios</h1>
+<hr/> 
+<a class="btn-success" href="<?php echo $this->basePath("/ejemplo/add");?>">Crear Usuarios
+</a>
+<hr/>
+<table class="table table-hover table-striped">
+    <tr>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>Descripción</th>
+        <th>Email</th>
+        <th>Editar</th>
+        <th>Eliminar</th>
+    </tr>    
+    <?php foreach ($this->usuarios as $usuario){?>
+    <tr>
+        <td><?php echo $usuario->name;?></td>
+        <td><?php echo $usuario->surname;?></td>
+        <td><?php echo $usuario->description;?></td>
+        <td><?php echo $usuario->email;?></td>
+        <td><a class="btn-warning" href="<?php echo $this->basePath("/ejemplo/edit/".$usuario->id);?>">Editar</a></td>
+        <td><a class="btn-danger" href="<?php echo $this->basePath("/ejemplo/delete/".$usuario->id);?>">Eliminar</a></td>
+    </tr>
+    <?php }?>
+    
+</table>

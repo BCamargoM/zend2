@@ -77,6 +77,20 @@ return array(
                     ),
                 ),
             ),
+             "ejemplo" => array(
+                "type" => "Segment",
+                  'options' => array(
+                    'route'    => '/ejemplo[/[:action][/:id]]',    
+                      'constraints' => array(
+                            'action' => '[a-zA-Z][a-zA-Z0-9_-]*'
+                        ),
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Application\Controller',
+                        'controller'    => 'Ejemplo',
+                        'action'        => 'index',
+                    ),
+                ),
+            ),  
         ),
     ),
     'service_manager' => array(
@@ -101,12 +115,18 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
-            'Application\Controller\Pruebas' => 'Application\Controller\PruebasController'
+            'Application\Controller\Pruebas' => 'Application\Controller\PruebasController',
+            'Application\Controller\Ejemplo' => 'Application\Controller\EjemploController'
         ),
         /*
          'factories' => array(
         'Controller\AlbumController' => 'Factory\Controller\AlbumControllerFactory',
          ),*/
+    ),
+     'controller_plugins' => array(
+        'invokables' => array(
+            'Plugins' => 'Application\Controller\Plugin\Plugins' 
+        ),
     ),
     'view_manager' => array(
         'display_not_found_reason' => true,
@@ -122,6 +142,11 @@ return array(
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
+        ),
+    ),
+    'view_helpers' => array(
+        'invokables' => array(
+            'lowercase' => 'Application\View\Helper\LowerCase',
         ),
     ),
     // Placeholder for console routes

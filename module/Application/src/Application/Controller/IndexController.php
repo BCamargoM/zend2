@@ -94,7 +94,13 @@ class IndexController extends AbstractActionController
     
     public function listarAction(){       
         
-        $usuarios = $this->getUsuariosTable()->fetchAll();
+        $plugins = $this->Plugins();
+        echo $plugins->hoy();
+        
+        $var ="";
+        var_dump($plugins->existe($var));
+        
+        $usuarios = $this->getUsuariosTable()->fetchAllSql();
         
         foreach($usuarios as $usuario){
         var_dump($usuario);    

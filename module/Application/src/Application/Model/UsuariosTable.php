@@ -4,18 +4,49 @@ namespace Application\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Adapter\Adapter;
-
+use Zend\Db\Sql\Sql;
+use Zend\Db\Sql\Select;
+use Zend\Db\ResultSet\ResultSet;
 class UsuariosTable{
     
     protected $tableGateway;
-    
+    protected $dbAdapter;
+
+
     public function __construct(TableGateway $tableGateway) {
         $this->tableGateway = $tableGateway;
+        $this->dbAdapter = $tableGateway->adapter;
     }     
     
     public function fetchAll(){
         $resultSet = $this->tableGateway->select();
         return $resultSet;
+    }
+    
+    public function fetchAllSql(){
+        
+        $sql = new Sql ($this->dbAdapter);
+        $select = $sql->select();
+        $select->from ("usuarios");
+        
+        $statement = $sql->prepareStatementForSqlObject($select);
+        $data = $statement->execute();
+        /* Igual las lines de codigo arriba hacen lo mismo que aqui solo que nosotros construimos el builder
+        $query = $this->dbAdapter->query("SELECT * FROM usuarios",Adapter::QUERY_MODE_EXECUTE);
+        $data = $query->toArray();        
+         * */
+         
+        /* esto es hace lo mismo que las lineas de arriba
+        $query = $this->dbAdapter->createStatement("SELECT * FROM usuarios");
+        $data = $query->execute();
+         * 
+         */
+        
+        // array en un array de objetos
+        
+        $resultSet = new ResultSet();
+        $data = $resultSet->initialize($data);
+        return $data;
     }
     
     public function getUsuario($id){
@@ -35,8 +66,8 @@ class UsuariosTable{
         return $row;
     }
     
-    public function saveUsuario (Usuario $usuario){
-        
+    public function saveUsuario (Usuario $usuario){      
+       
         $data = array(
             "name" => $usuario->name,
             "surname" => $usuario->surname,
@@ -44,7 +75,7 @@ class UsuariosTable{
             "email" => $usuario->email,
             "password" => $usuario->password,
             "image" => $usuario->image,
-            "alternative" => $alternative->alternative
+            "alternative" => $usuario->alternative
         );
         
         $id = (int)$usuario->id;
